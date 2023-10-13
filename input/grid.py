@@ -15,7 +15,11 @@ class grid:
         for i in self.rectangle:
             for j in i:
                 if j==1:
-                    print(Fore.RED + 'X '+ Style.RESET_ALL,end="")
-                else: 
-                    print(Fore.BLUE + '. '+ Style.RESET_ALL,end="")
+                    print(Fore.BLACK + 'X '+ Style.RESET_ALL,end="")
+                elif j==0: 
+                    print(Fore.YELLOW + '. '+ Style.RESET_ALL,end="")
+                elif j==2:
+                    print(Fore.RED + 'S '+ Style.RESET_ALL,end="")
+                elif j==3:
+                    print(Fore.RED + 'D '+ Style.RESET_ALL,end="")
             print("")
