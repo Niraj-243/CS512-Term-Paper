@@ -6,6 +6,8 @@ def make_graph(clusters,source,dest):
     q = []
     q.append((x0,y0))
     i=0
+    final1 = source
+    final2 = source
     while q:
         i+=1
         x0,y0 = q.pop(0)
@@ -20,8 +22,12 @@ def make_graph(clusters,source,dest):
                     graph[(x0,y0)] = []
                     graph[(x0,y0)].append((j-1,i-1))
                     q.append((j-1,i+1))
+                    final1 = (j-1,i+1)
                 if k+1>=0:
                     graph[(x0,y0)].append((k+1,i-1))
                     q.append((k+1,i+1))
-                break
+                    final2 = (k+1,i+1)
+                break    
+    graph[final1] = [dest]
+    graph[final2] = [dest]
     return graph
