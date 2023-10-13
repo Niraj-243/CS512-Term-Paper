@@ -11,7 +11,7 @@ class grid:
         self.length,self.height = np.shape(rectangle)
         self.rectangle = rectangle
     
-    def print_env(self):
+    def print_grid(self):
         for i in self.rectangle:
             for j in i:
                 if j==1:
