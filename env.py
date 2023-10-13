@@ -33,7 +33,6 @@ def random_state_generator(length,height,num):
             
     return arr
 
-p = pd.DataFrame([1,2])
 rect = random_state_generator(30,30,5)
 env1 = env(rect)
 env1.print_env()
