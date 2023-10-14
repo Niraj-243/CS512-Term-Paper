@@ -8,6 +8,7 @@ __pycache__/
 
 # jupyter runner
 runner_jupyter.ipynb
+.ipynb
 
 # Distribution / packaging
 .Python
