@@ -4,16 +4,20 @@ from graph.make_graph import make_graph
 from random_state_generator.random_state_generator import random_state_generator
 
 length = 60
-height = 40
-num = 8
+height = 30
+num = 6
 rectangle,source,dest = random_state_generator(length,height,num)
 
 grid = grid(rectangle)
 
-# This will print grid
-# grid.print_grid()
+#This will print grid
+grid.print_grid()
 
 clusters = make_clusters(rectangle)
 graph = make_graph(clusters,source,dest)
 print(graph)
+
+grid.add_graph(graph)
+
+grid.print_grid()
 
