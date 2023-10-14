@@ -11,11 +11,11 @@ rectangle,source,dest = random_state_generator(length,height,num)
 grid = grid(rectangle)
 
 #This will print grid
-grid.print_grid()
+# grid.print_grid()
 
 clusters = make_clusters(rectangle)
 graph = make_graph(clusters,source,dest)
-print(graph)
+# print(graph)
 
 grid.add_graph(graph)
 
