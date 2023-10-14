@@ -26,7 +26,7 @@ class grid:
                 elif j==3:
                     print(Fore.RED + 'D '+ Style.RESET_ALL,end="")
                 elif j==4:
-                    print(Fore.BLUE + '. ' + Style.RESET_ALL,end="")
+                    print(Fore.BLACK + '* ' + Style.RESET_ALL,end="")
             print("")
 
     def add_graph(self, graph):
