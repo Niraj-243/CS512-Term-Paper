@@ -44,3 +44,27 @@ class grid:
             if arr[vertex[0],vertex[1]] == 0:
                 arr[vertex[0],vertex[1]] = 4
         self.rectangle = arr
+
+    def plot_grid(self):
+        x,y = np.meshgrid(range(self.height),range(self.length))
+        col,char = None,None
+        for i in range(self.rectangle.shape[0]):
+            for j in range(self.rectangle.shape[1]):
+                val = self.rectangle[i][j]
+                if val==0: 
+                    col = 'yellow'
+                    char = '.'
+                if val==1: 
+                    col = 'black'
+                    char = '.'
+                if val==2: 
+                    col = 'blue'
+                    char = '.'
+                if val==3: 
+                    col = 'blue'
+                    char = '.'
+                if val==4: 
+                    col = 'red'
+                    char = '.'
+                plt.plot(j,self.rectangle.shape[0]-i-1,char,color=col)
+        plt.show()
