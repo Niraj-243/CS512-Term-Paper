@@ -19,5 +19,7 @@ graph = make_graph(clusters,source,dest)
 
 grid.add_graph(graph)
 
+
 grid.print_grid()
+grid.plot_grid()
 
