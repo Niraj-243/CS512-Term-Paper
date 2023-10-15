@@ -5,7 +5,7 @@ from random_state_generator.random_state_generator import random_state_generator
 
 length = 60
 height = 30
-num = 6
+num = 9
 rectangle,source,dest = random_state_generator(length,height,num)
 
 grid = grid(rectangle)
