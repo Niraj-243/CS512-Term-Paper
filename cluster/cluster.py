@@ -11,4 +11,5 @@ def make_clusters(rect):
                 if j_prev != -1:
                     clusters.append((i,j_prev,j-1))
                     j_prev = -1
+    clusters.sort()
     return clusters
