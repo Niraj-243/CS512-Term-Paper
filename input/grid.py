@@ -12,6 +12,7 @@ class grid:
     def __init__(self,rectangle):
         self.length,self.height = np.shape(rectangle)
         self.rectangle = rectangle
+        self.meta_rect = None
     
     def print_grid(self):
         count = 0
@@ -67,4 +68,41 @@ class grid:
                     col = 'red'
                     char = '.'
                 plt.plot(j,self.rectangle.shape[0]-i-1,char,color=col)
+        plt.show()
+    
+    def make_meta_grid(self,k):
+        arr = self.rectangle
+        length, height = arr.shape
+        m_length = int(length/k)
+        m_height = int(height/k)
+        meta_arr = np.zeros((m_length,m_height))
+        for i in range(m_length):
+            for j in range(m_height):
+                if 1 in arr[k*i:k*(i+1),k*j:k*(j+1)]:
+                    meta_arr[i][j] = 1
+        self.meta_rect = meta_arr
+
+    def plot_meta_grid(self):
+        h,l = self.meta_rect.shape
+        x,y = np.meshgrid(range(h),range(l))
+        col,char = None,None
+        for i in range(h):
+            for j in range(l):
+                val = self.meta_rect[i][j]
+                if val==0: 
+                    col = 'yellow'
+                    char = '.'
+                if val==1: 
+                    col = 'black'
+                    char = '.'
+                if val==2: 
+                    col = 'blue'
+                    char = '.'
+                if val==3: 
+                    col = 'blue'
+                    char = '.'
+                if val==4: 
+                    col = 'red'
+                    char = '.'
+                plt.plot(j,h-i-1,char,color=col)
         plt.show()
