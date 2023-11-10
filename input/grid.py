@@ -14,9 +14,12 @@ class grid:
         self.rectangle = rectangle
         self.meta_rect = None
     
-    def print_grid(self):
+    def print_grid(self,type="rect"):
         count = 0
-        for i in self.rectangle:
+        rec = self.rectangle
+        if type=="meta":
+            rec = self.meta_rect
+        for i in rec:
             for j in i:
                 if j==1:
                     print(Fore.BLACK + 'X '+ Style.RESET_ALL,end="")
@@ -30,8 +33,13 @@ class grid:
                     print(Fore.BLACK + '* ' + Style.RESET_ALL,end="")
             print("")
 
-    def add_graph(self, graph):
-        arr = self.rectangle
+    def add_graph(self, graph,type = "rect"):
+
+        if(type == "meta"):
+            arr = self.meta_rect
+        else:
+            arr = self.rectangle
+
         total_paths = []
         path_dic = {}
         for v in graph.keys():
@@ -44,14 +52,21 @@ class grid:
         for vertex in total_paths:
             if arr[vertex[0],vertex[1]] == 0:
                 arr[vertex[0],vertex[1]] = 4
-        self.rectangle = arr
+        if(type == "meta"):
+            self.meta_rect = arr
+        else:
+            self.rectangle = arr
 
-    def plot_grid(self):
-        x,y = np.meshgrid(range(self.height),range(self.length))
+    def plot_grid(self,type="rect"):
+        x,y = self.rectangle.shape
+        if type == "meta":
+            x,y = self.meta_rect.shape
         col,char = None,None
-        for i in range(self.rectangle.shape[0]):
-            for j in range(self.rectangle.shape[1]):
+        for i in range(x):
+            for j in range(y):
                 val = self.rectangle[i][j]
+                if type=="meta":
+                    val = self.meta_rect[i][j]
                 if val==0: 
                     col = 'yellow'
                     char = '.'
@@ -67,7 +82,10 @@ class grid:
                 if val==4: 
                     col = 'red'
                     char = '.'
-                plt.plot(j,self.rectangle.shape[0]-i-1,char,color=col)
+                ii = self.rectangle.shape[0]-i-1
+                if type=="meta":
+                    ii = self.meta_rect.shape[0]-i-1
+                plt.plot(j,ii,char,color=col)
         plt.show()
     
     def make_meta_grid(self,k):
@@ -80,29 +98,46 @@ class grid:
             for j in range(m_height):
                 if 1 in arr[k*i:k*(i+1),k*j:k*(j+1)]:
                     meta_arr[i][j] = 1
+        
+        meta_arr[m_length-1][0] = 2
+        meta_arr[0][m_height-1] = 3
         self.meta_rect = meta_arr
 
-    def plot_meta_grid(self):
-        h,l = self.meta_rect.shape
-        x,y = np.meshgrid(range(h),range(l))
-        col,char = None,None
-        for i in range(h):
-            for j in range(l):
-                val = self.meta_rect[i][j]
-                if val==0: 
-                    col = 'yellow'
-                    char = '.'
-                if val==1: 
-                    col = 'black'
-                    char = '.'
-                if val==2: 
-                    col = 'blue'
-                    char = '.'
-                if val==3: 
-                    col = 'blue'
-                    char = '.'
-                if val==4: 
-                    col = 'red'
-                    char = '.'
-                plt.plot(j,h-i-1,char,color=col)
-        plt.show()
+    def print_meta_path(self,graph,k):
+        count = 0
+        rec = self.rectangle.copy()
+        for x in range(rec.shape[0]):
+            for y in range(rec[x].shape[0]):
+                if rec[x][y] == 4:
+                    rec[x][y] = 0
+
+        total_paths = []
+        path_dic = {}
+        for v in graph.keys():
+            for u in graph[v]:
+                #path = bres(v[1],v[0],u[1],u[0])
+                path = list(bresenham(k*v[0],k*v[1],k*u[0],k*u[1]))
+                total_paths += path
+                path_dic[(k*v,k*u)] = path
+        #print(path_dic)
+        for vertex in total_paths:
+            if rec[vertex[0],vertex[1]] == 0:
+                rec[vertex[0],vertex[1]] = 4
+        
+
+        for i in rec:
+            for j in i:
+                if j==1:
+                    print(Fore.BLACK + 'X '+ Style.RESET_ALL,end="")
+                elif j==0: 
+                    print(Fore.YELLOW + '. '+ Style.RESET_ALL,end="")
+                elif j==2:
+                    print(Fore.RED + 'S '+ Style.RESET_ALL,end="")
+                elif j==3:
+                    print(Fore.RED + 'D '+ Style.RESET_ALL,end="")
+                elif j==4:
+                    print(Fore.BLACK + '* ' + Style.RESET_ALL,end="")
+            print("")
+
+
+    
