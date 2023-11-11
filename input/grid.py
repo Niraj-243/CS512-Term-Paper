@@ -57,6 +57,85 @@ class grid:
         else:
             self.rectangle = arr
 
+    def add_opt_path(self, graph,type = "rect"):
+
+        if(type == "meta"):
+            arr = self.meta_rect.copy()
+        else:
+            arr = self.rectangle.copy()
+
+        for u in range(arr.shape[0]):
+            for v in range(arr[u].shape[0]):
+                if arr[u][v]==4:
+                    arr[u][v] = 0
+
+        total_paths = []
+        path_dic = {}
+        for v in graph.keys():
+            for u in graph[v]:
+                #path = bres(v[1],v[0],u[1],u[0])
+                path = list(bresenham(v[0],v[1],u[0],u[1]))
+                total_paths += path
+                path_dic[(v,u)] = path
+        #print(path_dic)
+        for vertex in total_paths:
+            if arr[vertex[0],vertex[1]] == 0:
+                arr[vertex[0],vertex[1]] = 4
+        if(type == "meta"):
+            self.meta_opt_rect = arr
+        else:
+            self.opt_rectangle = arr
+
+    def print_opt_path(self,type="rect"):
+        count = 0
+        rec = self.opt_rectangle
+        if type=="meta":
+            rec = self.meta_opt_rect
+        for i in rec:
+            for j in i:
+                if j==1:
+                    print(Fore.BLACK + 'X '+ Style.RESET_ALL,end="")
+                elif j==0: 
+                    print(Fore.YELLOW + '. '+ Style.RESET_ALL,end="")
+                elif j==2:
+                    print(Fore.RED + 'S '+ Style.RESET_ALL,end="")
+                elif j==3:
+                    print(Fore.RED + 'D '+ Style.RESET_ALL,end="")
+                elif j==4:
+                    print(Fore.BLACK + '* ' + Style.RESET_ALL,end="")
+            print("")
+    
+    def plot_opt_path(self,type="rect"):
+        x,y = self.opt_rectangle.shape
+        if type == "meta":
+            x,y = self.meta_opt_rect.shape
+        col,char = None,None
+        for i in range(x):
+            for j in range(y):
+                val = self.opt_rectangle[i][j]
+                if type=="meta":
+                    val = self.meta_opt_rect[i][j]
+                if val==0: 
+                    col = 'yellow'
+                    char = '.'
+                if val==1: 
+                    col = 'black'
+                    char = '.'
+                if val==2: 
+                    col = 'blue'
+                    char = '.'
+                if val==3: 
+                    col = 'blue'
+                    char = '.'
+                if val==4: 
+                    col = 'red'
+                    char = '.'
+                ii = self.rectangle.shape[0]-i-1
+                if type=="meta":
+                    ii = self.meta_rect.shape[0]-i-1
+                plt.plot(j,ii,char,color=col)
+        plt.show()
+
     def plot_grid(self,type="rect"):
         x,y = self.rectangle.shape
         if type == "meta":
