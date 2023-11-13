@@ -51,7 +51,8 @@ grid.print_opt_path(type="meta")
 grid.plot_opt_path(type="meta")
 
 # reverse mapping
-# grid.print_meta_path(meta_graph,k)
+grid.print_meta_path(meta_graph,k)
+grid.plot_meta_path(meta_graph,k)
 
 
 
