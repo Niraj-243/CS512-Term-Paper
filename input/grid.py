@@ -265,9 +265,9 @@ class grid:
                     print(Fore.BLACK + '* ' + Style.RESET_ALL,end="")
             print("")
             
-    def print_reverse_meta_grid(self,graph,k,print=True):
+    def print_reverse_meta_grid(self,graph,k,print_grid=True):
         
-        if print:
+        if print_grid:
             count = 0
             rec = self.rectangle.copy()
             for x in range(rec.shape[0]):
