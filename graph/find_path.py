@@ -1,7 +1,10 @@
+import numpy as np
 def find_optimal_path(graph,source,destination):
 
     def manhattan_distance(p1,p2):
         return abs(p1[0]-p2[0]) + abs(p1[1]-p2[1])
+    def eucledian_distance(p1,p2):
+        return np.sqrt((p1[0]-p2[0])**2 + (p1[1]-p2[1])**2)
     opt_path = {}
     n = len(graph)
     dis = {}
@@ -31,7 +34,12 @@ def find_optimal_path(graph,source,destination):
         cur_list.append(next_node)
         opt_path_dest_to_src[cur_node] = cur_list
         cur_node = next_node
-
-    return opt_path_dest_to_src
+    def path_len(path):
+        len = 0
+        for k in path:
+            for l in path[k]:
+                len += eucledian_distance(k,l)
+        return len
+    return opt_path_dest_to_src,path_len(opt_path_dest_to_src)
 
                 

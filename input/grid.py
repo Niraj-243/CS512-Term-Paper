@@ -265,41 +265,43 @@ class grid:
                     print(Fore.BLACK + '* ' + Style.RESET_ALL,end="")
             print("")
             
-    def print_reverse_meta_grid(self,graph,k):
-        count = 0
-        rec = self.rectangle.copy()
-        for x in range(rec.shape[0]):
-            for y in range(rec[x].shape[0]):
-                if rec[x][y] == 4:
-                    rec[x][y] = 0
-
-        total_paths = []
-        path_dic = {}
-        for v in graph.keys():
-            for u in graph[v]:
-                #path = bres(v[1],v[0],u[1],u[0])
-                path = list(bresenham(k*v[0],k*v[1],k*u[0],k*u[1]))
-                total_paths += path
-                path_dic[(k*v,k*u)] = path
-        #print(path_dic)
-        for vertex in total_paths:
-            if rec[vertex[0],vertex[1]] == 0:
-                rec[vertex[0],vertex[1]] = 4
+    def print_reverse_meta_grid(self,graph,k,print=True):
         
+        if print:
+            count = 0
+            rec = self.rectangle.copy()
+            for x in range(rec.shape[0]):
+                for y in range(rec[x].shape[0]):
+                    if rec[x][y] == 4:
+                        rec[x][y] = 0
 
-        for i in rec:
-            for j in i:
-                if j==1:
-                    print(Fore.BLACK + 'X '+ Style.RESET_ALL,end="")
-                elif j==0: 
-                    print(Fore.YELLOW + '. '+ Style.RESET_ALL,end="")
-                elif j==2:
-                    print(Fore.RED + 'S '+ Style.RESET_ALL,end="")
-                elif j==3:
-                    print(Fore.RED + 'D '+ Style.RESET_ALL,end="")
-                elif j==4:
-                    print(Fore.BLACK + '* ' + Style.RESET_ALL,end="")
-            print("")
+            total_paths = []
+            path_dic = {}
+            for v in graph.keys():
+                for u in graph[v]:
+                    #path = bres(v[1],v[0],u[1],u[0])
+                    path = list(bresenham(k*v[0],k*v[1],k*u[0],k*u[1]))
+                    total_paths += path
+                    path_dic[(k*v,k*u)] = path
+            #print(path_dic)
+            for vertex in total_paths:
+                if rec[vertex[0],vertex[1]] == 0:
+                    rec[vertex[0],vertex[1]] = 4
+            
+
+            for i in rec:
+                for j in i:
+                    if j==1:
+                        print(Fore.BLACK + 'X '+ Style.RESET_ALL,end="")
+                    elif j==0: 
+                        print(Fore.YELLOW + '. '+ Style.RESET_ALL,end="")
+                    elif j==2:
+                        print(Fore.RED + 'S '+ Style.RESET_ALL,end="")
+                    elif j==3:
+                        print(Fore.RED + 'D '+ Style.RESET_ALL,end="")
+                    elif j==4:
+                        print(Fore.BLACK + '* ' + Style.RESET_ALL,end="")
+                print("")
             
         met_graph = {}
         for key in graph:
